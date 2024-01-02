@@ -2,12 +2,12 @@
 
 This repository contains the submission of Group #24 for the 5th Assignment of the *"Algorithmic Methods of Data Mining"* course, during the Academic year 2023–2024, in the **Data Science** Master's program at **Sapienza University of Rome**.
 
-## Team menbers
+## Team members
 
-| STUDENT | ID |
-| :-: | :-: |
+| STUDENT | ID | EMAIL |
+| :-: | :-: | :-: |
 | Francesco Lazzari | 1917922 |  
-| Sohrab Parsa | 2101087 |  
+| Sohrab Parsa | 2101087 | seyyediparsa.2101087@studenti.uniroma1.it | 
 | Adilkhan Bakridenov |  |
 | Alba Pernalotina | 2116863 |
 
@@ -15,4 +15,4 @@ This repository contains the submission of Group #24 for the 5th Assignment of t
 
 - `main.ipynb`: a Jupyter notebook file containing the codes and results of the homework;
 - `CommandLine.sh`: A Bash file containing the code for the command-line question;
-- `CLQ-Screenshot.png`: screenshot of the execution of the command-line question.
+- `CLQ-Screenshot.png`: a screenshot of the execution of the command-line question.
