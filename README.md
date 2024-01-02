@@ -13,6 +13,6 @@ This repository contains the submission of Group #24 for the 5th Assignment of t
 
 ## Repository Contents
 
-- `main.ipy`: a Jupyter notebook file containing the codes and results of the homework;
+- `main.ipynb`: a Jupyter notebook file containing the codes and results of the homework;
 - `CommandLine.sh`: A Bash file containing the code for the command-line question;
 - `CLQ-Screenshot.png`: screenshot of the execution of the command-line question.
