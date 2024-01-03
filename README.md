@@ -9,7 +9,7 @@ This repository contains the submission of Group #24 for the 5th Assignment of t
 | Francesco Lazzari | 1917922 |  lazzari.1917922@studenti.uniroma1.it |
 | Sohrab Seyyedi Parsa | 2101087 | seyyediparsa.2101087@studenti.uniroma1.it | 
 | Adilkhan Bakridenov |  |
-| Alba Pernalotina | 2116863 |
+| Alba Perna Lotina | 2116863 |
 
 ## Repository Contents
 
