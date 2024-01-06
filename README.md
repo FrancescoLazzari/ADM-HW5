@@ -15,4 +15,5 @@ This repository contains the submission of Group #24 for the 5th Assignment of t
 
 - `main.ipynb`: a Jupyter notebook file containing the codes and results of the homework;
 - `CommandLine.sh`: a Bash file containing the code for the command-line question;
-- `CLQ-Results`: a folder containing screenshots of the answers to the three CLQ questions, plus two graphs generated using Linux commands related to the second question.
+- `CLQ-Results`: a folder containing screenshots of the answers to the three CLQ questions, plus two graphs generated using Linux commands related to the second question;
+- `functions.py`: a Python script containing all the functions written by us that were required for our analysis.
