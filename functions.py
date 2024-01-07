@@ -1,21 +1,3 @@
-import networkx as nx
-import pandas as pd
-import numpy as np
-from collections import Counter
-from typing import List, Dict, Tuple
-import heapq
-from timeit import default_timer as timer
-
-import ijson
-import time
-import csv
-import matplotlib.pyplot as plt
-from itertools import zip_longest
-import seaborn as sns
-from prettytable import PrettyTable
-import matplotlib.patches as mpatches
-from itertools import count
-
 
 def mse(pr_scores1, pr_scores2):
     """
@@ -28,6 +10,26 @@ def mse(pr_scores1, pr_scores2):
     Returns of the function:
     mse (float) -> The calculated MSE score
     """
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
+
+    
     import numpy as np
     # Verify that both inputs are dictionaries
     if not isinstance(pr_scores1, dict) or not isinstance(pr_scores2, dict):
@@ -65,6 +67,25 @@ def score_check(pr_scores1, pr_scores2, epsilon=0.0001):
     Returns of the function:
     count (int) -> The percentage of nodes wich have a score differences less than epsilon
     """
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
+
     # Verify that both inputs are dictionaries
     if not isinstance(pr_scores1, dict) or not isinstance(pr_scores2, dict):
         # If one or both inputs has the wrong type rise a ValueError
@@ -95,6 +116,24 @@ def extract_graph_data(graph, graph_name):
     Output:
     A dictionary containing all the requested data of the graph
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
 
     # Get the number of nodes in the graph
     num_nodes = len(graph.nodes())
@@ -177,6 +216,24 @@ def node_contribution(graph, node, graph_name):
     Output:
     A dictionary containing the centrality measures for 
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
 
     # Calculate the betweenness centrality 
     betweenness_centrality = nx.centrality.betweenness_centrality(graph)[node]
@@ -214,6 +271,25 @@ def shortest_ordered_walk(graph, authors_a, a_1, a_n, N):
     Return: 
     A dictionary with the shortest walk and papers crossed
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
+
     # Extract the top N papers in the graph based on degree centrality
     top_n_papers = sorted(graph.nodes(), key=lambda x: graph.degree(x), reverse=True)[:N]
 
@@ -305,6 +381,24 @@ def disconnecting_graphs(graph, authorA, authorB, N):
     Output:
     Returns the initial subgraph, the components containing authorA and authorB after disconnection, and the number of edges removed
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
 
     # Select the top N authors based on degree centrality
     top_n_authors = sorted(graph.nodes(), key=lambda x: graph.degree(x), reverse=True)[:N]
@@ -371,6 +465,24 @@ def extract_communities(graph, N, paper_1, paper_2):
     A tuple containing the subgraph with top N nodes, number of edges removed, 
     list of communities, and a boolean indicating if paper_1 and paper_2 are in the same community
     """
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
 
     def edge_to_remove_directed(graph):
         # Initialize the minimum weight to infinity and minimum edge to None
@@ -490,6 +602,24 @@ def visualize_graph_data(graph_data):
     Output:
     Displays histograms of degree distribution, prints a table of key metrics and returns a pandas DataFrame of graph hubs
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
 
     # Create histograms for degree distribution
     plt.figure(figsize=(15, 8))
@@ -553,6 +683,24 @@ def visualize_node_contribution(centrality_measures, node, graph_name):
     Output:
     Prints a table displaying the centrality measures for the specified node.
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
 
     # Initialize a PrettyTable for displaying centrality measures
     table = PrettyTable()
@@ -582,6 +730,24 @@ def visualize_shortest_path(graph, result, N):
     Output:
     A plot showing the subgraph with the highlighted shortest path and a legend indicating start and end nodes
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
 
     # Extract the shortest path and the papers crossed from the result variable
     path, papers = result['Shortest Walk'], result['Papers Crossed']
@@ -642,6 +808,25 @@ def visualize_disconnected_graph(original_graph, G_a, G_b, num_edges_to_disconne
     G_b (set) -> A set of nodes representing the other subgraph after disconnection
     num_edges_to_disconnect (int) -> The number of edges removed to disconnect the graph.
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
+
     # Print the number of links to be disconnected
     print("Number of links to be disconnected:", num_edges_to_disconnect)
     # Generate positions for nodes for consistent layout between graphs
@@ -688,8 +873,25 @@ def plot_communities(graph, communities, paper_1, paper_2):
     paper_1 (str) -> Identifier for the first paper of interest
     paper_2 (str) -> Identifier for the second paper of interest
 
-    
     """
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+    
 
     # Compute node positions for consistent layout across all plots
     pos = nx.spring_layout(graph)
@@ -739,6 +941,24 @@ def print_community_table(communities):
     '''
     Prints a table listing the papers in each community
     '''
+    import networkx as nx
+    import pandas as pd
+    import numpy as np
+    from collections import Counter
+    from typing import List, Dict, Tuple
+    import heapq
+    from timeit import default_timer as timer
+    
+    import ijson
+    import time
+    import csv
+    import matplotlib.pyplot as plt
+    from itertools import zip_longest
+    import seaborn as sns
+    from prettytable import PrettyTable
+    import matplotlib.patches as mpatches
+    from itertools import count
+
     # Print the header for community table
     print("Community\tPapers")
     print("-" * 30)
