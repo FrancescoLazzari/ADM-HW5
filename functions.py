@@ -459,3 +459,164 @@ def extract_communities(graph, N, paper_1, paper_2):
     
     return subgraph, num_edges_to_remove, communities, same_community
 
+#-------------------------------------------------------------------------------------------------------------------------
+
+def visualize_graph_data(graph_data):
+    '''
+    Visualization of Graph Data
+
+    Argument of the function:
+    graph_data (dict) -> A dictionary containing all the requested data of the graph
+
+    Output:
+    Displays histograms of degree distribution, prints a table of key metrics and returns a pandas DataFrame of graph hubs
+    '''
+
+    # Create histograms for degree distribution
+    plt.figure(figsize=(15, 8))
+
+    def plot_distribution(distribution_dict, title, subplot_index):
+        # Convert the sub-dictionary into a DataFrame
+        distribution_df = pd.DataFrame(list(distribution_dict.items()), columns=['Degree Range', 'Count'])
+        # Create a subplot for the histogram
+        plt.subplot(1, 2 if 'In-Degree Distribution' in graph_data and 'Out-Degree Distribution' in graph_data else 1, subplot_index)
+        # Plot the histogram 
+        sns.barplot(x='Degree Range', y='Count', data=distribution_df)
+        # Set the title for the histogram
+        plt.title(title)
+        # Rotate the x-axis labels for better readability
+        plt.xticks(rotation=45)
+
+    # Check if both in-degree and out-degree distributions exist for directed graphs
+    if 'In-Degree Distribution' in graph_data and 'Out-Degree Distribution' in graph_data:
+        # Plot two histograms for directed graphs (in-degree and out-degree)
+        plot_distribution(graph_data['In-Degree Distribution'], 'In-Degree Distribution', 1)
+        plot_distribution(graph_data['Out-Degree Distribution'], 'Out-Degree Distribution', 2)
+    else:
+        # Plot a single histogram for undirected graphs
+        plot_distribution(graph_data['Degree Distribution'], 'Degree Distribution', 1)
+
+    # Remove the top and right border
+    sns.despine()
+    plt.tight_layout()
+    plt.show()
+
+    # Create a table with the key characteristics of the graph (excluding hubs, distributions, and Graph Name)
+    metrics = {k: v for k, v in graph_data.items() if k not in ["Graph Hubs", "In-Degree Distribution", "Out-Degree Distribution", "Degree Distribution", "Graph Name"]}
+    # Initialize a PrettyTable
+    table = PrettyTable()
+    # Set the title of the table to the graph's name
+    table.title = f"{graph_data['Graph Name']}"
+    # Set the column names of the table to the keys of the metrics
+    table.field_names = metrics.keys()
+    # Add the metrics values as a row in the table
+    table.add_row(metrics.values())
+
+    print(table)
+
+    # Create a pandas DataFrame for the graph hubs
+    hubs_df = pd.DataFrame(graph_data["Graph Hubs"], columns=["Graph Hubs"])
+
+    return hubs_df
+
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+def visualize_node_contribution(centrality_measures, node, graph_name):
+    '''
+    Visualize The Node Contribution
+
+    Arguments of the function:
+    centrality_measures (dict) -> A dictionary containing centrality measures of a node
+    node (int) -> The node for which centrality measures are to be visualized
+    graph_name (str) -> The name of the graph.
+
+    Output:
+    Prints a table displaying the centrality measures for the specified node.
+    '''
+
+    # Initialize a PrettyTable for displaying centrality measures
+    table = PrettyTable()
+    # Set the title of the table using the node and the graph name
+    table.title = f"Contribution of node {node} in {graph_name}"
+    # Define the column names for the table
+    table.field_names = ["Node", "Betweenness Centrality", "PageRank", "Closeness Centrality", "Degree Centrality"]
+    # Format the centrality values to 4 decimal places and prepare them for adding to the table
+    value = ["{:.4f}".format(centrality_measures[name]) for name in table.field_names[1:]]
+    # Add a row to the table with the node and its centrality values
+    table.add_row([node] + value)
+
+
+    print(table)
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+def visualize_shortest_path(graph, result, N):
+    '''
+    Visualization of the Shortest Path in a Graph
+
+    Argumnets of the function:
+    graph (nx.DiGraph) -> A NetworkX graph
+    result (dict) -> A dictionary containing the 'Shortest Walk' and 'Papers Crossed' as keys
+    N (int) -> The number of top nodes to consider based on degree centrality
+    
+    Output:
+    A plot showing the subgraph with the highlighted shortest path and a legend indicating start and end nodes
+    '''
+
+    # Extract the shortest path and the papers crossed from the result variable
+    path, papers = result['Shortest Walk'], result['Papers Crossed']
+    # Identify the start and the end node
+    start_node, end_node = path[0], path[-1]  
+
+    # Extract the top N nodes based on degree centrality
+    top_n_nodes = sorted(graph.nodes(), key=lambda x: graph.degree(x), reverse=True)[:N]
+    # Create the subgraph
+    subgraph = graph.subgraph(top_n_nodes)  
+
+    # Set the plot dimension
+    fig, ax = plt.subplots(figsize=(20, 15))  # Creating a matplotlib figure and axis
+
+    # Color the nodes 
+    # start node in green, end node in red, others nodes in light blue
+    node_colors = ['green' if node == start_node else 'red' if node == end_node else 'lightblue' for node in subgraph.nodes()]
+    
+    # Color the edges 
+    # edges in the path in blue, others in light grey
+    path_edges = set(zip(path, path[1:])) | set(zip(path[1:], path))
+    edge_colors = ['blue' if (u, v) in path_edges else 'lightgrey' for u, v in subgraph.edges()]
+
+    # Give a number to the edges along the shortest path
+    edge_labels = {(u, v): str(i) for i, (u, v) in enumerate(zip(path, path[1:])) if u in subgraph and v in subgraph}
+
+    # Plot the subgraph in a circular layout
+    layout = nx.circular_layout(subgraph)  
+    # Plot the nodes
+    nx.draw(subgraph, layout, node_color=node_colors, with_labels=True, ax=ax, font_size=10, node_size=700) 
+    # Plot the edges
+    nx.draw_networkx_edges(subgraph, layout, edgelist=subgraph.edges(), edge_color=edge_colors, width=2, ax=ax)
+    # Add a label to the edges
+    nx.draw_networkx_edge_labels(subgraph, layout, edge_labels=edge_labels, font_color='black', ax=ax)  
+
+    # Add a legend to the plot
+    start_patch = mpatches.Patch(color='green', label='Start Node')  
+    end_patch = mpatches.Patch(color='red', label='End Node')  
+    # Show the legend
+    plt.legend(handles=[start_patch, end_patch], loc='upper left')  
+    # Sett the title of the plot
+    ax.set_title("Shortest Path", fontsize=24)  
+    # Show the plot
+    plt.show()  
+
+    path_df = pd.DataFrame({'List of Crossed Papers': papers })
+    return path_df
+
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------------------------------------------------
+
+
+
