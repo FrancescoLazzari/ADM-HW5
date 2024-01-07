@@ -615,8 +615,117 @@ def visualize_shortest_path(graph, result, N):
 #-------------------------------------------------------------------------------------------------------------------------
 
 
+def visualize_disconnected_graph(original_graph, G_a, G_b, num_edges_to_disconnect):
+    '''
+    Arguments:
+    original_graph (nx.Graph) -> A networkx graph
+    G_a (set) -> A set of nodes representing first subgraphs after disconnection
+    G_b (set) -> A set of nodes representing the other subgraph after disconnection
+    num_edges_to_disconnect (int) -> The number of edges removed to disconnect the graph.
+    '''
+    # Print the number of links to be disconnected
+    print("Number of links to be disconnected:", num_edges_to_disconnect)
+    # Generate positions for nodes for consistent layout between graphs
+    pos = nx.spring_layout(original_graph)
+    # Set up the plot for the original graph
+    plt.figure(figsize=(15, 8))
+
+    # Draw the original graph with specified settings
+    nx.draw(original_graph, pos, with_labels=True, font_size=8, node_size=200, font_color="black")
+    # Title for the original graph
+    plt.title("Original Graph")
+    # Display the plot for the original graph
+    plt.show()
+
+    # Create subgraphs from the original graph based on G_a and G_b
+    G_a_subgraph = original_graph.subgraph(G_a)
+    G_b_subgraph = original_graph.subgraph(G_b)
+
+    # Set up the plot for the disconnected graph
+    plt.figure(figsize=(15, 8))
+
+    # Draw subgraph G_a with specific color and settings
+    nx.draw(G_a_subgraph, pos, with_labels=True, font_size=8, node_size=200, font_color="black", node_color="skyblue")
+    # Draw subgraph G_b with different color and settings
+    nx.draw(G_b_subgraph, pos, with_labels=True, font_size=8, node_size=200, font_color="black", node_color="lightcoral")
+
+    # Title for the disconnected graph
+    plt.title("Disconnected Graph")
+    # Add legend to distinguish the two subgraphs
+    plt.legend(["Subgraph G_a", "Subgraph G_b"])
+    # Display the plot for the disconnected graph
+    plt.show()
+
 
 #-------------------------------------------------------------------------------------------------------------------------
+
+def plot_communities(graph, communities, paper_1, paper_2):
+    """
+    Plots the graph highlighting the identified communities 
+
+    Arguments of the function:
+    graph (nx.Graph) -> A NetworkX graph object representing the original graph
+    communities (list) -> A list of sets, where each set contains nodes belonging to a community
+    paper_1 (str) -> Identifier for the first paper of interest
+    paper_2 (str) -> Identifier for the second paper of interest
+
+    
+    """
+
+    # Compute node positions for consistent layout across all plots
+    pos = nx.spring_layout(graph)
+    # Plot the original graph
+    plt.figure(figsize=(12, 8))
+    # Plot nodes
+    nx.draw_networkx_nodes(graph, pos, node_size=200)  
+    # Draw edges
+    nx.draw_networkx_edges(graph, pos, alpha=0.5)     
+    # Draw node labels
+    nx.draw_networkx_labels(graph, pos, font_size=8, font_color="black")  
+    
+    plt.title("Original Graph")
+    plt.show()
+
+    # Plot the graph showing the communities
+    plt.figure(figsize=(12, 8))
+    for i, community in enumerate(communities, 1):
+        # Draw nodes of each community in a different color
+        nx.draw_networkx_nodes(graph, pos, nodelist=list(community), node_size=200, node_color=f"C{i}")
+
+    # Draw edges    
+    nx.draw_networkx_edges(graph, pos, alpha=0.5)  
+    # Draw labels
+    nx.draw_networkx_labels(graph, pos, font_size=8, font_color="black")  
+    plt.title("Graph with Communities")
+    plt.show()
+
+    # Plot the final graph and highlight the communities of Paper_1 and Paper_2
+    plt.figure(figsize=(12, 8))
+    for i, community in enumerate(communities, 1):
+        # Highlight communities containing Paper_1 or Paper_2, others in grey
+        color = f"C{i}" if paper_1 in community or paper_2 in community else "lightgrey"
+        # Increase node size for Paper_1 and Paper_2
+        size = [300 if node in [paper_1, paper_2] else 100 for node in community]
+        nx.draw_networkx_nodes(graph, pos, nodelist=list(community), node_size=size, node_color=color)
+
+    # Draw the edges    
+    nx.draw_networkx_edges(graph, pos, alpha=0.5)  
+     # Draw labels
+    nx.draw_networkx_labels(graph, pos, font_size=8, font_color="black") 
+
+    plt.title("Graph with Paper_1 and Paper_2 Communities Highlighted")
+    plt.show()
+
+def print_community_table(communities):
+    '''
+    Prints a table listing the papers in each community
+    '''
+    # Print the header for community table
+    print("Community\tPapers")
+    print("-" * 30)
+    # Iterate through each community and print its papers
+    for i, community in enumerate(communities, 1):
+        print(f"Community {i}:\t{', '.join(map(str, community))}")
 
 
 
